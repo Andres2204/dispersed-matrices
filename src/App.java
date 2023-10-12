@@ -15,6 +15,7 @@ public class App {
             {2,0,0}
         };
 
+
         int[][] testMatrix = {
             {10,13,7,0},
             {0,5,0,21},
@@ -28,10 +29,10 @@ public class App {
         System.out.println();
 
         DispersedMatrix ma2 = new DispersedMatrix(testMatrix);
-        ma2.triplet.showTriplet();
-        System.out.println();
+        // ma2.triplet.showTriplet();
+        // System.out.println();
 
-        ma1.triplet.multiply(ma2.triplet);
+        ma1.triplet.addition(ma1.triplet);
         ma1.triplet.showTriplet();
         System.out.println();
     }
