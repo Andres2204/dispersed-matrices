@@ -87,25 +87,9 @@ public class Triplet {
         resTriplet[0][2] = k-1;
 
         triplet = resTriplet;
-        adjust();
+        resize();
     }
 
-    private void adjust() {
-
-        int[][] resTriplet = new int[triplet[0][2]+1][3];
-
-        for (int i = 0; i <= triplet[0][2]; i++) {
-            resTriplet[i][0] = triplet[i][0];
-            resTriplet[i][1] = triplet[i][1];
-            resTriplet[i][2] = triplet[i][2];
-            
-        }
-        
-        triplet = resTriplet;
-
-    }
-    
-    
     public void multiply(Triplet b) {
         
         int[][] btriplet = b.getTriplet();
@@ -160,56 +144,25 @@ public class Triplet {
         triplet = resTriplet;
     }
 
-    /*
-     
-        if (triplet[0][2] == 0) return; // has no data
-        if (triplet[0][0] != btriplet[0][1]) return; // columns and rows are not equals
-        
-        resTriplet[0][0] = triplet[0][0] > btriplet[0][0] ? triplet[0][0] : btriplet[0][0];
-        resTriplet[0][1] = triplet[0][1] < btriplet[0][1] ? triplet[0][1] : btriplet[0][1];
-
-        int selectedRow=0, selectedColumn=0, sum;
-
-        int i = 1, j = 1, k = 1;
-
-        while (i < triplet[0][2]) {
-            sum=0;
-
-            while(j < btriplet[0][1]) {
-                if (triplet[i][0] == btriplet[j][1]) {
-                    sum += triplet[i][2]*btriplet[j][2];
-                }
-
-                j++;
-            }
-
-            i++;
-
-            resTriplet[k][0] = selectedRow;
-            resTriplet[k][1] = selectedColumn;
-            resTriplet[k][2] = sum;
-            if (k < resTriplet.length-1) k++;
-
-            selectedRow++;
-            if (selectedRow == resTriplet[0][1]) {
-                selectedRow = 0;
-                selectedColumn ++;
-            }
-        }
-
-     */
+    // [====================== Utility ======================]
+    private void resize() {
+        int[][] resTriplet = new int[triplet[0][2]+1][3];
+        for (int i = 0; i <= triplet[0][2]; i++) {
+            resTriplet[i][0] = triplet[i][0];
+            resTriplet[i][1] = triplet[i][1];
+            resTriplet[i][2] = triplet[i][2];
+        }     
+        triplet = resTriplet;
+    }
 
     public String showTriplet() {
         String s="";
-        for (int i = 0; i < triplet.length; i++) {
-            
+        for (int i = 0; i < triplet.length; i++) {            
             for (int j = 0; j < triplet[0].length; j++) {
                 System.out.print("| " + triplet[i][j]);
             }
             System.out.println("\n----------");
-
         }
-
         return s;
     }
 

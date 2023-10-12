@@ -25,15 +25,17 @@ public class App {
         // System.out.println(matrix[0].length);
 
         DispersedMatrix ma1 = new DispersedMatrix(matrix);
-        ma1.triplet.showTriplet();
         System.out.println();
-
-        DispersedMatrix ma2 = new DispersedMatrix(testMatrix);
+        System.out.println(ma1.form1.showForm1());
+        
+        // ma1.triplet.showTriplet();
+        // DispersedMatrix ma2 = new DispersedMatrix(testMatrix);
         // ma2.triplet.showTriplet();
         // System.out.println();
 
-        ma1.triplet.addition(ma1.triplet);
-        ma1.triplet.showTriplet();
-        System.out.println();
+        // ma1.triplet.addition(ma1.triplet);
+        // ma1.triplet.showTriplet();
+        // System.out.println();
+
     }
 }
