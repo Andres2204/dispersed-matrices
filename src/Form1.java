@@ -18,9 +18,6 @@ public class Form1 {
     private void createForm1(int[][] matrix) {
         // find max
         int max = matrix.length > matrix[0].length ? matrix.length : matrix[0].length;
-
-
-
         // rows and columns
         int rows = matrix.length, columns = matrix[0].length;
 
@@ -28,7 +25,7 @@ public class Form1 {
         // create head registers.
         head = new Node(rows, columns, 0);
         Node p = head;
-        for (int i = 0; i < max; i++) {
+        for (int i = 0; i < rows; i++) {
             p.setNextNode(new Node(i, i, 0)); 
             p = p.getNextNode();           
         }
@@ -49,6 +46,7 @@ public class Form1 {
                     q = q.getNextRow();
                 }
             }
+            
             q.setNextRow(p);
         } 
 
@@ -62,7 +60,7 @@ public class Form1 {
             p = head.getNextNode();
             while(p != head){
                 q = p.getNextRow();
-                while(q != p){
+                while(q != p && q != null){
                     if(q.getColumn() == RC.getColumn()){
                         a.setNextColumn(q);
                         a = a.getNextColumn();
@@ -103,7 +101,7 @@ public class Form1 {
         if (head != null) {
             output = "";
             do {
-                output += showList(p) + "\nRC |\n"; 
+                output += showList(p) + (p.getNextNode() != null ? "\nRC |\n" : "\nx"); 
                 p = p.getNextNode();
 
             } while (p != head);

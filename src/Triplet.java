@@ -159,9 +159,9 @@ public class Triplet {
         String s="";
         for (int i = 0; i < triplet.length; i++) {            
             for (int j = 0; j < triplet[0].length; j++) {
-                System.out.print("| " + triplet[i][j]);
+                s += "| " + triplet[i][j];
             }
-            System.out.println("\n----------");
+            s+= "\n----------\n";
         }
         return s;
     }
