@@ -1,6 +1,9 @@
 public class Form2 {
+    // [=================== Attributes ===================]
     private Node head;
 
+    // Contructor methods
+    
     public Form2() {
         head = null;
     }
@@ -23,12 +26,10 @@ public class Form2 {
         int i = 0;
 
         while (i <= head.getColumn()) {
-
             if (p == null) {
                 p = head;
                 i++;
             }
-
             if(p.getColumn() == i  && p != head) {
                 q.setNextColumn(p);
                 q = p;
@@ -37,17 +38,45 @@ public class Form2 {
         }
     }
 
-    public void appendToEndRow(int row, int column, int d) { // append to the end of the list
-        Node newNode = new Node(row,column,d), p = head;
-        if (isEmpty()) {
-            head = newNode;
-        } else {
-            while (p.getNextRow() != null) {
-                p = p.getNextRow();
-            }
-            p.setNextRow(newNode);
+    // [====================== Methods ======================]
+
+    // Math Methods    
+
+    public int[] additionRows() {
+        int[] rowsResult = new int[head.getRow()];
+        Node p = head.getNextRow();
+
+        while (p != null) {
+            rowsResult[p.getRow()] += p.getData();
+            p = p.getNextRow();
         }
+
+
+        return rowsResult;
     }
+
+    public int[] additionColumns() {
+        int[] columnsResult = new int[head.getColumn()];
+        Node p = head.getNextColumn();
+
+        while (p != null) {
+            columnsResult[p.getColumn()] += p.getData();
+            p = p.getNextColumn();
+        }
+        return columnsResult;
+    }
+
+    // Editing Methods
+
+    public void insert(int row, int column, int d) {}
+
+    public void deleteByNumber(int d) {}
+
+    public void deleteByPosition(int row, int column) {}
+
+    // [====================== Utility ======================]
+
+    // Show Methods
 
     public String showForm2ByRows() {
         Node p = head;
@@ -77,6 +106,20 @@ public class Form2 {
         return output;
     }
 
+    // Others
+
+    public void appendToEndRow(int row, int column, int d) { // append to the end of the list
+        Node newNode = new Node(row,column,d), p = head;
+        if (isEmpty()) {
+            head = newNode;
+        } else {
+            while (p.getNextRow() != null) {
+                p = p.getNextRow();
+            }
+            p.setNextRow(newNode);
+        }
+    }
+
     public int size() {
         if (!isEmpty()) {
             int items=0;
@@ -92,6 +135,16 @@ public class Form2 {
 
     public boolean isEmpty() {
          return head == null ? true : false;
+    }
+
+    // [====================== Getters and Setters ======================]
+
+    public Node getHead() {
+        return head;
+    }
+
+    public void setHead(Node head) {
+        this.head = head;
     }
 
 }

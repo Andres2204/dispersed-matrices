@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class App {
     public static void main(String[] args) throws Exception {
         // int[][] matrix = {
@@ -15,7 +17,6 @@ public class App {
             {2,0,0}
         };
 
-
         int[][] testMatrix = {
             {10,13,7,0},
             {0,5,0,21},
@@ -23,18 +24,51 @@ public class App {
         };
 
         int[][] testMatrix2 = {{0,1},{1,0}};
-        // System.out.println(matrix.length);
-        // System.out.println(matrix[0].length);
 
+        DispersedMatrix ma1 = new DispersedMatrix(getRandomMatrix());
+
+        System.out.println(ma1.triplet.showTriplet());
+        System.out.println("triplet AddittionRows -> "+ Arrays.toString(ma1.triplet.additionRows()));
+        System.out.println("triplet AddittionColumns -> "+ Arrays.toString(ma1.triplet.additionColumns()));
+
+        System.out.println("\n ShowForm1 -> "+ma1.form1.showForm1());
+        System.out.println(ma1.form1.showForm1Columns());
+        System.out.print("\nf1 AdditionRows -> "+Arrays.toString(ma1.form1.additionRows()));
+        System.out.print("\nf1 AdditionColumns -> "+Arrays.toString(ma1.form1.additionColumns()));
+
+        System.out.println("\n\nf2 Rows -> "+ma1.form2.showForm2ByRows());
+        System.out.println("\nf2 Columns -> "+ma1.form2.showForm2ByColumns());
+        System.out.print("\nf2 AdditionRows -> "+Arrays.toString(ma1.form2.additionRows()));
+        System.out.print("\nf2 AdditionColumns -> "+Arrays.toString(ma1.form2.additionColumns()));
+
+        // DispersedMatrix ma2 = new DispersedMatrix(testMatrix);
+        // ma2.triplet.showTriplet();
+        // System.out.println();
+
+        // ma1.triplet.addition(ma1.triplet);
+        // ma1.triplet.showTriplet();
+        // System.out.println();
+
+        /*
+        80 0 29 33
+        0 81 0 16
+        87 0 0 81 
+
+        62 0 0 
+        20 79 44
+        */
+
+    }
+
+    public static int[][] getRandomMatrix() {
         int n = 0;
         int m = 0;
         do {
-            n = (int) Math.floor(Math.random() * 3+ 2);
+            n = (int) Math.floor(Math.random() * 3 + 2);
             m = (int) Math.floor(Math.random() * 3 + 2);
         } while (n == 0 && m == 0);
 
         System.out.println(n+"x"+m);
-        System.out.println("");
         int Mat[][] = new int[n][m];
 
         for (int i = 0; i <= ((n * m) / 2) + 1; i++) {
@@ -47,23 +81,9 @@ public class App {
                 System.out.print(Mat[i][j] + " ");
             }
             System.out.println(); // Salto de línea al final de cada fila
-        }
+        } System.out.println();
 
-        DispersedMatrix ma1 = new DispersedMatrix(Mat);
-        System.out.println(ma1.triplet.showTriplet());
-
-        System.out.println(ma1.form1.showForm1());
-        
-        System.out.println(ma1.form2.showForm2ByRows());
-        System.out.println(ma1.form2.showForm2ByColumns());
-
-        // DispersedMatrix ma2 = new DispersedMatrix(testMatrix);
-        // ma2.triplet.showTriplet();
-        // System.out.println();
-
-        // ma1.triplet.addition(ma1.triplet);
-        // ma1.triplet.showTriplet();
-        // System.out.println();
-
+        return Mat;
     }
+
 }

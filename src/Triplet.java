@@ -1,9 +1,9 @@
 public class Triplet {
-
     // [=================== Attributes ===================]
+    
     private int[][] triplet;
 
-    
+    // Constructor Methods
 
     public Triplet(int[][] matrix) {
         triplet = createTriplet(matrix, 0,0,1);
@@ -12,7 +12,6 @@ public class Triplet {
     private int[][] createTriplet(int[][] matrix, int i, int j, int k) {
         //base case
         if (i == matrix.length-1 && j == matrix[0].length)  {
-            
             triplet = new int[k][3];
             
             triplet[0][0] = matrix.length;
@@ -20,35 +19,30 @@ public class Triplet {
             triplet[0][2] = k-1;
             
             return triplet;
-            
         }
         
         if (j == matrix[0].length) {
             j = 0;
             i++;
         }
-        
-        // if (i == matrix.length) i--;
 
         if (matrix[i][j] != 0) {
             triplet = createTriplet(matrix, i, j+1, k+1);
     
             triplet[k][0] = i;
             triplet[k][1] = j;
-            triplet[k][2] = matrix[i][j];
-            
+            triplet[k][2] = matrix[i][j]; 
         } else {
             triplet = createTriplet(matrix, i, j+1, k);
         }
-        
         return triplet;
     }
 
-    
-    
     // [====================== Methods ======================]
-    public void addition(Triplet B) {
 
+    // Math Methods
+
+    public void addition(Triplet B) {
         // get B matrix
         int[][] btriplet = B.getTriplet();
 
@@ -59,7 +53,6 @@ public class Triplet {
 
         for  (int i = 0; i < triplet[0][0]; i++) {  
             for (int j = 0; j < triplet[0][1]; j++) {
-                
                 int sum = 0;
                 a = 1; b = 1;
 
@@ -72,7 +65,6 @@ public class Triplet {
                         sum += btriplet[b][2]; b = btriplet[0][2] + 2;
                     } else b++;
                 }
-
                 if (sum != 0) {
                     resTriplet[k][0] = i;
                     resTriplet[k][1] = j;
@@ -144,7 +136,52 @@ public class Triplet {
         triplet = resTriplet;
     }
 
+    public int[] additionRows() {
+        int[] rowsResult = new int[triplet[0][0]];
+
+        int i = 1, selectedRow=0;
+        
+        while (i <= triplet[0][2]) {
+
+            if (triplet[i][0] == selectedRow) {
+                rowsResult[selectedRow] += triplet[i][2];
+                i++;
+            } else {
+                selectedRow++;
+            }
+
+        };
+
+        return rowsResult;
+    }
+
+    public int[] additionColumns() {
+        int[] columnsResult = new int[triplet[0][1]];
+        int i = 1, selectedColumn=0;
+        while (selectedColumn <= triplet[0][1]) {
+            if (i > triplet[0][2]) {
+                i = 1;
+                selectedColumn++;
+            }
+            if (triplet[i][1] == selectedColumn) {
+                columnsResult[selectedColumn] += triplet[i][2];
+            }
+            i++;
+        };
+        
+        return columnsResult;
+    }
+    
+    // Edition Methods
+
+    public void insert(int row, int column, int d) {}
+
+    public void deleteByNumber(int d) {}
+
+    public void deleteByPosition(int row, int column) {}
+
     // [====================== Utility ======================]
+
     private void resize() {
         int[][] resTriplet = new int[triplet[0][2]+1][3];
         for (int i = 0; i <= triplet[0][2]; i++) {
@@ -161,7 +198,7 @@ public class Triplet {
             for (int j = 0; j < triplet[0].length; j++) {
                 s += "| " + triplet[i][j];
             }
-            s+= "\n----------\n";
+            s += "\n----------\n";
         }
         return s;
     }

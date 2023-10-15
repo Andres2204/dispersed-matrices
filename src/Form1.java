@@ -1,10 +1,11 @@
 public class Form1 {
 
     // [=================== Attributes ===================]
+    
     private Node head;
 
+    // Constructors And Creation Methods
 
-    // constructors
     public Form1() {
         head = null;
     }
@@ -12,8 +13,6 @@ public class Form1 {
     public Form1(int matrix[][]) {
         createForm1(matrix);
     }
-
-    // [====================== Methods ======================]
 
     private void createForm1(int[][] matrix) {
         // find max
@@ -25,20 +24,22 @@ public class Form1 {
         // create head registers.
         head = new Node(rows, columns, 0);
         Node p = head;
-        for (int i = 0; i < rows; i++) {
+        for (int i = 0; i < max; i++) {
             p.setNextNode(new Node(i, i, 0)); 
-            p = p.getNextNode();           
+            p = p.getNextNode();
+            
+            p.setNextColumn(p);
+            p.setNextRow(p);
         }
         p.setNextNode(head);
 
         //STEP 2
         // create nodes for head registers.
-        p = head;
-        Node q = null;
+        p = head.getNextNode();
+        Node q;
 
         // iterate de matrix
         for (int i = 0; i < rows; i++) { // iterate rows
-            p = p.getNextNode();
             q = p;
             for (int j = 0; j < columns; j++) { // iterate columns
                 if (matrix[i][j] != 0) { // add a node
@@ -48,11 +49,12 @@ public class Form1 {
             }
             
             q.setNextRow(p);
+            p = p.getNextNode();
         } 
 
         //STEP 3
         // Link nodes by column
-        Node RC = head.getNextNode(),a = RC;
+        Node RC = head.getNextNode(), a;
         p = head.getNextNode(); q = p.getNextRow();
         
         while(RC != head){
@@ -63,7 +65,7 @@ public class Form1 {
                 while(q != p && q != null){
                     if(q.getColumn() == RC.getColumn()){
                         a.setNextColumn(q);
-                        a = a.getNextColumn();
+                        a = q;
                     }
                     q = q.getNextRow();
                 }
@@ -74,9 +76,58 @@ public class Form1 {
         }
     }
 
+    // [====================== Methods ======================]
+
+    // Math methods
+
+    public int[] additionRows() {
+        int[] rowsResult = new int[head.getRow()];
+        Node p = head.getNextNode(), q;
+        while (p != head) {
+            q = p.getNextRow();
+            while (q != p) {
+                rowsResult[q.getRow()] += q.getData();
+                q = q.getNextRow();
+            }
+            p = p.getNextNode();
+        }
+        return rowsResult;
+    }
+
+    public int[] additionColumns() {
+        int[] columnsResult = new int[head.getColumn()];
+        Node p = head.getNextNode(), q;
+
+        //int selectedColumn = 0;
+
+        while (p != head) {
+            q = p.getNextColumn();
+
+            while (q != p) {
+                columnsResult[q.getColumn()] += q.getData();
+                q = q.getNextColumn();
+            }
+
+            p = p.getNextNode();
+        }
+
+        return columnsResult;
+    }
+
+    public void multiply(Form1 B) {}
+
+    // Editing Methods
+
+    public void insert(int row, int column, int d) {}
+
+    public void deleteByNumber(int d) {}
+
+    public void deleteByPosition(int row, int column) {}
 
     // [====================== Utility ======================]
-    // show triplet methods
+
+    // Show Triplet Methods
+
     private String showList(Node start) {
         Node p = start;
         String nextText, output = "Is Empty";
@@ -107,6 +158,33 @@ public class Form1 {
             } while (p != head);
         }
         return output;
+    }
+
+    public String showForm1Columns() {
+        String output = "Is Empty";
+        if (head != null) {
+            Node p = head.getNextNode(), q;
+            output = "ShowForm1Columns -> ";
+            while (p != head) {
+                q = p.getNextColumn();
+                while (q != p) {
+                    output += "[" + q.getData() + "] ";
+                    q = q.getNextColumn();
+                }
+                p = p.getNextNode();
+            } 
+        }
+        return output;
+    }
+
+    // [====================== Getters and Setters ======================]
+
+    public Node getHead() {
+        return head;
+    }
+
+    public void setHead(Node head) {
+        this.head = head;
     }
 
 }
