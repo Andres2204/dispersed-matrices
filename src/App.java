@@ -32,6 +32,11 @@ public class App {
         System.out.println("Matriz 2: "); 
         ma2.triplet.showTriplet();
         System.out.println();
+
+        System.out.println("Multiplicacion ");
+        ma1.triplet.multiply(ma2.triplet);
+        ma1.triplet.showTriplet();
+        System.out.println("\n\n");
         
         int[][] testMatrix2 = {{0,1},{1,0}};
 
