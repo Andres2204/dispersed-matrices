@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Triplet {
 
     // [=================== Attributes ===================]
@@ -72,6 +75,7 @@ public class Triplet {
         // Inicializar matriz resultado
         int[][] resTriplet = new int[numRowsA * numColsB + 1][3]; // Asegúrate de tener suficiente espacio
         int resIndex = 1;
+        boolean flag = false;
 
         // Realizar la multiplicación
         for (int i = 1; i <= numElemsA; i++) {
@@ -89,9 +93,21 @@ public class Triplet {
                     int newCol = colB;
                     int newVal = valA * valB;
 
-                    resTriplet[resIndex][0] = newRow;
-                    resTriplet[resIndex][1] = newCol;
-                    resTriplet[resIndex][2] = newVal;
+                    for (int k = 1; k < resIndex; k++) {
+                        if ((resTriplet[k][0] == newRow) && (resTriplet[k][1] == newCol)) {
+                            resTriplet[k][2] += newVal;
+                            flag = true;
+                            break;
+                        }
+                    }
+
+                    if (flag) {
+                        flag = false;
+                    } else {
+                        resTriplet[resIndex][0] = newRow;
+                        resTriplet[resIndex][1] = newCol;
+                        resTriplet[resIndex][2] = newVal;
+                    }
 
                     resIndex++;
                 }
@@ -103,6 +119,7 @@ public class Triplet {
         resTriplet[0][2] = resIndex - 1;
 
         triplet = resTriplet;
+
     }
 
     /*

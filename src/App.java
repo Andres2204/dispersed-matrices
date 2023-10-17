@@ -24,10 +24,12 @@ public class App {
         // System.out.println(matrix[0].length);
 
         DispersedMatrix ma1 = new DispersedMatrix(matrix);
+        System.out.println("Matriz 1: "); 
         ma1.triplet.showTriplet();
         System.out.println();
 
         DispersedMatrix ma2 = new DispersedMatrix(testMatrix);
+        System.out.println("Matriz 2: "); 
         ma2.triplet.showTriplet();
         System.out.println();
 
