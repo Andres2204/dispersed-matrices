@@ -189,11 +189,86 @@ public class Triplet {
     
     // Edition Methods
 
-    public void insert(int row, int column, int d) {}
+    public void insert(int row, int column, int d) {
+        // row and column range verification
+        if (row >= triplet[0][0] || row < 0) return;
+        if (column >= triplet[0][1] || column < 0) return;
+        
+
+        // search the index of the new data
+        int i = 1, index = 0;
+        while (i <= triplet[0][2]) {
+            if (triplet[i][0] == row && triplet[i][1] == column) { // replace
+                triplet[i][2] = d; return;
+            }
+
+            if (triplet[i][0] >= row && triplet[i][1] > column) {
+                index = i; i = triplet[0][2] + 69;
+            } else if (triplet[i][0] > row) {
+                index = i; i = triplet[0][2] + 69;
+            } 
+
+            i++;
+            if (i == triplet[0][2]) index = triplet[0][2]+1;
+        }
+
+        // create the new triplet
+        int[][] newTriplet = new int[triplet[0][2]+2][3];
+
+        // set the new data
+        newTriplet[index][0] = row;
+        newTriplet[index][1] = column;
+        newTriplet[index][2] = d;
+
+        // fill the new triplet
+        int j = 0; i = 0;
+        while (j <= triplet[0][2]) { 
+            if (i != index) {
+                newTriplet[i][0] = triplet[j][0];
+                newTriplet[i][1] = triplet[j][1];
+                newTriplet[i][2] = triplet[j][2];
+                i++; j++;
+            } else i++;
+
+        }
+        newTriplet[0][2] = triplet[0][2] + 1;
+        triplet = newTriplet;
+    }
 
     public void deleteByNumber(int d) {}
 
-    public void deleteByPosition(int row, int column) {}
+    public void deleteByPosition(int row, int column) {
+        // row and column range verification
+        if (row >= triplet[0][0] || row < 0) return;
+        if (column >= triplet[0][1] || column < 0) return;
+
+        int i=1;
+
+        while ( i <= triplet[0][2]) {
+            if (triplet[i][0] == row && triplet[i][1] == column) {
+                
+                // create new triplet
+                int[][] newTriplet = new int[triplet[0][2]][3];
+
+                // fill the new triplet
+                int j = 0, k =0;
+                while (k <= triplet[0][2]) {
+                    if (k != i) {
+                        newTriplet[j][0] = triplet[k][0];
+                        newTriplet[j][1] = triplet[k][1];
+                        newTriplet[j][2] = triplet[k][2];
+                        j++; k++;
+                    } else k++;
+                }
+
+                newTriplet[0][2] = triplet[0][2]-1;
+                triplet =  newTriplet;
+                return;
+            }
+            i++;
+        }
+
+    }
 
     // [====================== Utility ======================]
 

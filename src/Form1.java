@@ -54,8 +54,13 @@ public class Form1 {
 
         //STEP 3
         // Link nodes by column
+        step3();
+        
+    }
+
+    private void step3() {
         Node RC = head.getNextNode(), a;
-        p = head.getNextNode(); q = p.getNextRow();
+        Node p = head.getNextNode(), q = p.getNextRow();
         
         while(RC != head){
             a = RC;
@@ -79,6 +84,98 @@ public class Form1 {
     // [====================== Methods ======================]
 
     // Math methods
+
+    public void addition(Form1 B) {
+
+        if (head.getRow() != B.getHead().getRow() || head.getColumn() != B.getHead().getColumn()) return;
+
+        Node ap = head.getNextNode(), bp = B.getHead().getNextNode();
+        Node aq = null, bq = null;
+        Node auxC = null;
+
+        while (ap != head && bp != B.getHead()) {
+
+            aq = ap.getNextRow(); bq = bp.getNextRow();
+
+            System.out.println("\n-----------");
+
+            while (aq != ap || bq != bp) {
+
+                System.out.print(aq.getColumn() +" , " +bq.getColumn());
+
+                if ((aq != ap && bq != bp) && (aq.getColumn() == bq.getColumn())) {
+                    aq.setData(aq.getData()+bq.getData());
+                    System.out.print("  1");
+                }
+
+                if (aq == ap && bq != bp) { // only aq endend
+
+                    System.out.print("  2");
+                    aq = aq.getNextRow();
+                    while (aq.getNextRow() != ap) {
+                        aq = aq.getNextRow();
+                    }
+
+                    Node x = new Node(bq.getRow(), bq.getColumn(), bq.getData());
+                    x.setNextRow(aq.getNextRow());
+                    aq.setNextRow(x);
+                    aq = aq.getNextRow();
+
+                } else if (bq != bp && bq.getColumn() == 0 && aq.getColumn() != 0) {
+
+                    System.out.print("  3");
+                    Node x = new Node(bq.getRow(), bq.getColumn(), bq.getData());
+                    x.setNextRow(ap.getNextRow());
+                    ap.setNextRow(x);
+                                
+                } else if ((aq != ap && bq != bp) && (aq.getColumn() != bq.getColumn())) {
+                    if (aq.getColumn() < bq.getColumn()) {
+                        System.out.print("  4");
+                        // buscar en A
+                        auxC = aq;
+                        while (auxC != ap && auxC.getColumn() < bq.getColumn()) {
+                            auxC = auxC.getNextRow();
+                        }
+
+                        if (auxC == ap || auxC.getColumn() > bq.getColumn()) {
+                            Node x = new Node(bq.getRow(), bq.getColumn(), bq.getData());
+                            x.setNextRow(aq.getNextRow());
+                            aq.setNextRow(x);
+                            aq = aq.getNextRow();
+                        }
+                        if (auxC.getColumn() == bq.getColumn()) auxC.setData(bq.getData()+auxC.getData());
+
+
+                    } else if (aq.getColumn() > bq.getColumn()) {
+                        System.out.print("  5");
+                        //buscar en B
+                        auxC = bq;
+                        while (auxC != bp && auxC.getColumn() < aq.getColumn()) {
+                            auxC = auxC.getNextRow();
+                        }
+
+                        if (auxC == bp || auxC.getColumn() > aq.getColumn()) {
+                            Node x = new Node(bq.getRow(), bq.getColumn(), bq.getData());
+                            x.setNextRow(aq.getNextRow());
+                            aq.setNextRow(x);
+                            aq = aq.getNextRow();
+                        };
+                        if (auxC.getColumn() == aq.getColumn()) auxC.setData(aq.getData()+auxC.getData());
+                    }
+                }
+
+                if (aq != ap) aq = aq.getNextRow();
+                if (bq != bp) bq = bq.getNextRow();
+                System.out.println();
+            }
+
+            if (ap != head) ap = ap.getNextNode();
+            if (ap != B.getHead()) bp = bp.getNextNode();
+        }
+        // appendSortRows(head.getNextNode(), 0, 1, 10);
+
+        step3();
+    }
 
     public int[] additionRows() {
         int[] rowsResult = new int[head.getRow()];
@@ -175,6 +272,53 @@ public class Form1 {
             } 
         }
         return output;
+    }
+
+    // Others
+
+    private int rowSize(Node start) {
+        if(!isEmptyRow(start)) {
+            int c = 0;
+            Node p = start.getNextRow();
+            while (p != start) {
+                c++;
+                p = p.getNextRow();
+            }
+            return c;
+        }
+        return 0;
+    }
+
+    private void appendSortRows(Node start, int row, int column, int d) { 
+            Node p = start.getNextRow(), q = p ,x = new Node(row, column, d);
+            if (!isEmptyRow(start)) {
+    
+                // Loop through the list until some condition is met
+                while (p != start) {
+                    if (p.getColumn() > q.getColumn()) {
+                        break; // exit to while
+                    }
+                    q = p;
+                    p = p.getNextRow();
+                }; 
+    
+                if (p == start) {
+                    x.setNextRow(start.getNextRow());
+                    start.setNextRow(x);
+                } else {
+                    q.setNextRow(p);
+                    p.setNextRow(x);
+                    x.setNextRow(start);
+                }
+    
+            } else {
+                start.setNextRow(x);
+                x.setNextRow(start);
+            }
+    }
+
+    public boolean isEmptyRow(Node start) {
+        return start.getNextRow() == start ? true : false;
     }
 
     // [====================== Getters and Setters ======================]
