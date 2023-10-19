@@ -32,33 +32,33 @@ public class App {
             {2,0,1} // 4, 0 , 1
         };
 
-        DispersedMatrix ma1 = new DispersedMatrix(matrix);
-        System.out.println("Matriz 1: "); 
-        ma1.triplet.showTriplet();
-        System.out.println();
+        DispersedMatrix ma1 = new DispersedMatrix(getRandomMatrix(4, 4));
+        // System.out.println("Matriz 1: "); 
+        // ma1.triplet.showTriplet();
+        // System.out.println();
 
         DispersedMatrix ma2 = new DispersedMatrix(testMatrix);
-        System.out.println("Matriz 2: "); 
-        ma2.triplet.showTriplet();
-        System.out.println();
+        // System.out.println("Matriz 2: "); 
+        // ma2.triplet.showTriplet();
+        // System.out.println();
 
-        DispersedMatrix ma3 = new DispersedMatrix(testMatrix3);
+        DispersedMatrix ma3 = new DispersedMatrix(getRandomMatrix(4, 4));
 
-        System.out.println("Multiplicacion ");
-        //ma1.triplet.multiply(ma2.triplet);
-        System.out.println(ma1.triplet.showTriplet());
-        System.out.println("\n\n");
-        System.out.println("añadir: \n");
-        ma1.triplet.insert(3, 2, -1);
+        // System.out.println("Multiplicacion ");
+        // ma1.triplet.multiply(ma2.triplet);
+        // System.out.println(ma1.triplet.showTriplet());
+        // System.out.println("\n\n");
+        // System.out.println("añadir: \n");
+        // ma1.triplet.insert(3, 2, -1);
 
         ma1.triplet.deleteByPosition(0, 2);
         
 
         // DispersedMatrix ma1 = new DispersedMatrix(getRandomMatrix());
 
-        System.out.println(ma1.triplet.showTriplet());
-        System.out.println("triplet AddittionRows -> "+ Arrays.toString(ma1.triplet.additionRows()));
-        System.out.println("triplet AddittionColumns -> "+ Arrays.toString(ma1.triplet.additionColumns()));
+        // System.out.println(ma1.triplet.showTriplet());
+        // System.out.println("triplet AddittionRows -> "+ Arrays.toString(ma1.triplet.additionRows()));
+        // System.out.println("triplet AddittionColumns -> "+ Arrays.toString(ma1.triplet.additionColumns()));
 
         System.out.println("\n ShowForm1 f1 -> "+ma1.form1.showForm1());
         System.out.println("\n ShowForm1 f2 -> "+ma3.form1.showForm1());
@@ -69,10 +69,10 @@ public class App {
         // System.out.print("\nf1 AdditionRows -> "+Arrays.toString(ma1.form1.additionRows()));
         // System.out.print("\nf1 AdditionColumns -> "+Arrays.toString(ma1.form1.additionColumns()));
 
-        System.out.println("\n\nf2 Rows -> "+ma1.form2.showForm2ByRows());
-        System.out.println("\nf2 Columns -> "+ma1.form2.showForm2ByColumns());
-        System.out.print("\nf2 AdditionRows -> "+Arrays.toString(ma1.form2.additionRows()));
-        System.out.print("\nf2 AdditionColumns -> "+Arrays.toString(ma1.form2.additionColumns()));
+        // System.out.println("\n\nf2 Rows -> "+ma1.form2.showForm2ByRows());
+        // System.out.println("\nf2 Columns -> "+ma1.form2.showForm2ByColumns());
+        // System.out.print("\nf2 AdditionRows -> "+Arrays.toString(ma1.form2.additionRows()));
+        // System.out.print("\nf2 AdditionColumns -> "+Arrays.toString(ma1.form2.additionColumns()));
 
         // DispersedMatrix ma2 = new DispersedMatrix(testMatrix);
         // ma2.triplet.showTriplet();
@@ -93,13 +93,20 @@ public class App {
 
     }
 
-    public static int[][] getRandomMatrix() {
-        int n = 0;
-        int m = 0;
-        do {
-            n = (int) Math.floor(Math.random() * 3 + 2);
-            m = (int) Math.floor(Math.random() * 3 + 2);
-        } while (n == 0 && m == 0);
+    public static void getRandomMatrix() {
+        getRandomMatrix(0, 0);
+    }
+    public static int[][] getRandomMatrix(int n, int m) {
+        if (n == 0) {
+            do {
+                n = (int) Math.floor(Math.random() * 3 + 2);
+            } while (n == 0);
+        }
+        if (m == 0) {
+            do {
+                n = (int) Math.floor(Math.random() * 3 + 2);
+            } while (m == 0);
+        }
 
         System.out.println(n+"x"+m);
         int Mat[][] = new int[n][m];
