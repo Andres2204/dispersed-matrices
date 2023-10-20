@@ -1,4 +1,4 @@
-import java.util.Arrays;
+//import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -11,7 +11,7 @@ public class App {
         // };
 
         int[][] matrix = {
-            {10,0,7},
+            {10,13,7},
             {0,0,5},
             {0,21,41},
             {2,0,0}
@@ -32,7 +32,7 @@ public class App {
             {2,0,1} // 4, 0 , 1
         };
 
-        DispersedMatrix ma1 = new DispersedMatrix(getRandomMatrix(4, 4));
+        DispersedMatrix ma1 = new DispersedMatrix(matrix);
         // System.out.println("Matriz 1: "); 
         // ma1.triplet.showTriplet();
         // System.out.println();
@@ -61,9 +61,9 @@ public class App {
         // System.out.println("triplet AddittionColumns -> "+ Arrays.toString(ma1.triplet.additionColumns()));
 
         System.out.println("\n ShowForm1 f1 -> "+ma1.form1.showForm1());
-        System.out.println("\n ShowForm1 f2 -> "+ma3.form1.showForm1());
-        ma1.form1.addition(ma3.form1);
-        System.out.println("\n ShowForm1Addition -> "+ma1.form1.showForm1());
+        System.out.println("\n ShowForm1 f2 -> "+ma2.form1.showForm1());
+        ma1.form1.multiply(ma2.form1);
+        System.out.println("\n ShowFormMultiply -> "+ma1.form1.showForm1());
 
         // System.out.println(ma1.form1.showForm1Columns());
         // System.out.print("\nf1 AdditionRows -> "+Arrays.toString(ma1.form1.additionRows()));

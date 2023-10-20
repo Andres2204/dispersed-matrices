@@ -107,7 +107,7 @@ public class Form1 {
 
             aq = ap.getNextRow(); bq = bp.getNextRow();
 
-            while (aq != ap || bq != bp) {   
+            while (aq != ap || bq != bp) {
 
                 if (bq == bp) { // bq ended
                     C.appendEndRows(aq.getRow(), aq.getColumn(), aq.getData());
@@ -152,24 +152,6 @@ public class Form1 {
         step3();
     }
 
-    private Node searchByPos(int row, int column) {
-        Node p = head.getNextNode(), q;
-
-        while (p != head) {
-            q = p.getNextRow();
-            while (q != p) {
-                if (q.getRow() == row && q.getColumn() == column) {
-                    return q;
-                }
-                q = q.getNextRow();
-            }
-            p = p.getNextNode();
-
-        }
-
-        return null;
-    }
-
     public int[] additionRows() {
         int[] rowsResult = new int[head.getRow()];
         Node p = head.getNextNode(), q;
@@ -204,7 +186,42 @@ public class Form1 {
         return columnsResult;
     }
 
-    public void multiply(Form1 B) {}
+    public void multiply(Form1 B) {
+
+        Form1 C;
+        if (head.getColumn() == B.getHead().getRow()){
+            C = new Form1(new int[head.getRow()][B.getHead().getColumn()]);
+
+        } else if (head.getRow() == B.getHead().getColumn() ) {
+            C = new Form1(new int[B.getHead().getRow()][head.getColumn()]);
+
+        } else return;
+
+        int i = 0, j = 0, k=0, sum, adata, bdata;
+        Node asearch, bsearch;
+        while (i < head.getRow()) {
+            j = 0;
+            while (j < B.getHead().getColumn()) {
+                k=0;
+                sum = 0;
+                while (k < head.getColumn() ) {
+                    asearch = searchByPos(i, k);
+                    bsearch = B.searchByPos(k, j);
+
+                    adata = asearch != null ? asearch.getData() : 0;
+                    bdata = bsearch != null ? bsearch.getData() : 0;
+                    sum += adata*bdata;
+
+                    k++;
+                }
+                if (sum != 0) C.appendEndRows(i, j, sum);
+                j++;
+            }
+            i++;
+        }
+        head = C.getHead();
+        step3();
+    }
 
     // Editing Methods
 
@@ -268,6 +285,41 @@ public class Form1 {
     }
 
     // Others
+
+    private Node searchByPos(int row, int column) {
+        Node p = head.getNextNode(), q;
+
+        while (p != head) {
+            q = p.getNextRow();
+            while (q != p) {
+                if (q.getRow() == row && q.getColumn() == column) {
+                    return q;
+                }
+                q = q.getNextRow();
+            }
+            p = p.getNextNode();
+
+        }
+
+        return null;
+    }
+
+    private Node searchByColumn(int column) {
+
+        Node p = head.getNextNode(), q;
+        while (p.getColumn() != column ) {
+            if (p == head) return null;
+            p = p.getNextNode();
+        }
+
+        q = p.getNextColumn();
+        while (q != p) {
+            if (q.getColumn() == column) return q;
+            q = q.getNextColumn();
+        }
+
+        return null;
+    }
 
     private int rowSize(Node start) {
         if(!isEmptyRow(start)) {
