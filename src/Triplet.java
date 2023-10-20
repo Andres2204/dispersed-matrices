@@ -49,29 +49,44 @@ public class Triplet {
         if (triplet[0][0] != btriplet[0][0] || triplet[0][1] != btriplet[0][1]) return;
 
         int[][] resTriplet = new int[triplet[0][2] + triplet[0][2]+1][3];
-        int a=1,b=1, k=1;
+        int a=1,b=1, k=1, sum;
 
-        for  (int i = 0; i < triplet[0][0]; i++) {  
+        for (int i = 0; i < triplet[0][0]; i++) { 
             for (int j = 0; j < triplet[0][1]; j++) {
-                int sum = 0;
+                
+                sum = 0;
                 a = 1; b = 1;
+                // search data in triplets
 
-                while(a<=triplet[0][2] && b<= btriplet[0][2]) {
-                    if ( a<=triplet[0][2] && triplet[a][0] == i && triplet[a][1] == j){
-                        sum += triplet[a][2]; a = triplet[0][2] + 2;
-                    } else a++;
+                while (a <= triplet[0][2]) {
+                    if (triplet[a][0] == i && triplet[a][1] == j) {
+                        sum += triplet[a][2];
+                    } 
 
-                    if ( b<=btriplet[0][2] && btriplet[b][0] == i && btriplet[b][1] == j){
-                        sum += btriplet[b][2]; b = btriplet[0][2] + 2;
-                    } else b++;
+                    if (triplet[a][0] > i) a = triplet[0][2] + 5;
+
+                    a++;
                 }
+
+                while (b <= btriplet[0][2]) {
+                    if (btriplet[b][0] == i && btriplet[b][1] == j) {
+                        sum += btriplet[b][2];
+                    } 
+
+                    if (btriplet[b][0] > i) b = btriplet[0][2] + 5;
+
+                    b++;
+                }
+
                 if (sum != 0) {
                     resTriplet[k][0] = i;
                     resTriplet[k][1] = j;
                     resTriplet[k][2] = sum;
                     k++;
                 }
+
             }
+            
         }
 
         resTriplet[0][0] = triplet[0][0];

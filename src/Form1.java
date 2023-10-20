@@ -304,23 +304,6 @@ public class Form1 {
         return null;
     }
 
-    private Node searchByColumn(int column) {
-
-        Node p = head.getNextNode(), q;
-        while (p.getColumn() != column ) {
-            if (p == head) return null;
-            p = p.getNextNode();
-        }
-
-        q = p.getNextColumn();
-        while (q != p) {
-            if (q.getColumn() == column) return q;
-            q = q.getNextColumn();
-        }
-
-        return null;
-    }
-
     private int rowSize(Node start) {
         if(!isEmptyRow(start)) {
             int c = 0;

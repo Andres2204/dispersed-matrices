@@ -50,20 +50,24 @@ public class App {
         // System.out.println("\n\n");
         // System.out.println("añadir: \n");
         // ma1.triplet.insert(3, 2, -1);
-
-        ma1.triplet.deleteByPosition(0, 2);
+        // ma1.triplet.deleteByPosition(0, 2);
         
 
         // DispersedMatrix ma1 = new DispersedMatrix(getRandomMatrix());
 
-        // System.out.println(ma1.triplet.showTriplet());
+        // ystem.out.println(ma1.triplet.showTriplet());
         // System.out.println("triplet AddittionRows -> "+ Arrays.toString(ma1.triplet.additionRows()));
         // System.out.println("triplet AddittionColumns -> "+ Arrays.toString(ma1.triplet.additionColumns()));
 
-        System.out.println("\n ShowForm1 f1 -> "+ma1.form1.showForm1());
-        System.out.println("\n ShowForm1 f2 -> "+ma2.form1.showForm1());
+        ma1.triplet.multiply(ma2.triplet);
+        System.out.println(ma1.triplet.showTriplet());
+
         ma1.form1.multiply(ma2.form1);
-        System.out.println("\n ShowFormMultiply -> "+ma1.form1.showForm1());
+        System.out.println(ma1.form1.showForm1());
+
+        ma1.form2.multiply(ma2.form2);
+        System.out.println("\n ShowFormMultiply -> "+ma1.form2.showForm2ByRows());
+
 
         // System.out.println(ma1.form1.showForm1Columns());
         // System.out.print("\nf1 AdditionRows -> "+Arrays.toString(ma1.form1.additionRows()));
