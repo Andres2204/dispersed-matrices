@@ -1,107 +1,223 @@
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class App {
+
+    static Scanner read = new Scanner(System.in);
+    static ArrayList<DispersedMatrix> matrix = new ArrayList<DispersedMatrix>();
+    static int m = 0;
+
     public static void main(String[] args) throws Exception {
         // int[][] matrix = {
-        //     {8,3,0},
-        //     {0,0,1},
-        //     {0,2,0},
-        //     {19,0,11},
-        //     {0,0,6},
+        // {8,3,0},
+        // {0,0,1},
+        // {0,2,0},
+        // {19,0,11},
+        // {0,0,6},
         // };
 
-        int[][] matrix = {
-            {10,0,7},
-            {0,0,5},
-            {0,21,41},
-            {2,0,0}
+        int[][] m1 = {
+                { 10, 13, 7 },
+                { 0, 0, 5 },
+                { 0, 21, 41 },
+                { 2, 0, 0 }
         };
 
-        int[][] testMatrix = {
-            {10,13,7,0},
-            {0,5,0,21},
-            {41,2,0,0}
+        int[][] m1_2 = {
+                { 10, 13, 7, 0 },
+                { 0, 5, 0, 21 },
+                { 41, 2, 0, 0 }
         };
 
-        int[][] testMatrix2 = {{0,1},{1,0}};
+        int[][] m2 = { { 0, 1 }, { 1, 0 } };
 
-        int[][] testMatrix3 = {
-            {0,10,0}, // 10, 10, 7
-            {1,1,0},    // 1, 1, 5
-            {2,21,0}, // 2, 42, 41
-            {2,0,1} // 4, 0 , 1
+        int[][] m3 = {
+                { 0, 10, 0 }, // 10, 10, 7
+                { 1, 1, 0 }, // 1, 1, 5
+                { 2, 21, 0 }, // 2, 42, 41
+                { 2, 0, 1 } // 4, 0 , 1
         };
 
-        DispersedMatrix ma1 = new DispersedMatrix(matrix);
-        System.out.println("Matriz 1: "); 
-        ma1.triplet.showTriplet();
-        System.out.println();
+        matrix.add(new DispersedMatrix(m1));
+        matrix.add(new DispersedMatrix(m1_2));
+        matrix.add(new DispersedMatrix(m2));
+        matrix.add(new DispersedMatrix(m3));
 
-        DispersedMatrix ma2 = new DispersedMatrix(testMatrix);
-        System.out.println("Matriz 2: "); 
-        ma2.triplet.showTriplet();
-        System.out.println();
+        int opt = 0;
+        int mathOpt;
+        int auxM;
+        int row = 0, column = 0, d = 0;
 
-        DispersedMatrix ma3 = new DispersedMatrix(testMatrix3);
+        while (true) {
 
-        System.out.println("Eliminar por Dato ");
-        ma2.form2.deleteByNumber(41);
-        System.out.println(ma2.form2.showForm2ByRows());
-        System.out.println("\n\n");
-        // System.out.println("añadir: \n");
-        ma1.triplet.insert(3, 2, -1);
+            System.out.println("\n\n" + menu());
+            opt = read.nextInt();
 
-        ma1.triplet.deleteByPosition(0, 2);
-        
+            switch (opt) {
 
-        // DispersedMatrix ma1 = new DispersedMatrix(getRandomMatrix());
+                case 1:
 
-        // System.out.println(ma1.triplet.showTriplet());
-        // System.out.println("triplet AddittionRows -> "+ Arrays.toString(ma1.triplet.additionRows()));
-        // System.out.println("triplet AddittionColumns -> "+ Arrays.toString(ma1.triplet.additionColumns()));
+                    do {
+                        System.out.print("\n Desea ingresar un tamaño espesifico? (0: si, 1: no) ");
+                        mathOpt = read.nextInt();
 
-        // System.out.println("\n ShowForm1 f1 -> "+ma1.form1.showForm1());
-        // System.out.println("\n ShowForm1 f2 -> "+ma3.form1.showForm1());
-        // ma1.form1.addition(ma3.form1);
-        // System.out.println("\n ShowForm1Addition -> "+ma1.form1.showForm1());
+                    } while (mathOpt != 1 && mathOpt != 0);
 
-        // // System.out.println(ma1.form1.showForm1Columns());
-        // // System.out.print("\nf1 AdditionRows -> "+Arrays.toString(ma1.form1.additionRows()));
-        // // System.out.print("\nf1 AdditionColumns -> "+Arrays.toString(ma1.form1.additionColumns()));
+                    if (mathOpt == 0) {
+                        do {
+                            System.out.print("\nIngresar filas (mayor que 0): ");
+                            row = read.nextInt();
 
-        // System.out.println("\n\nf2 Rows -> "+ma1.form2.showForm2ByRows());
-        // System.out.println("\nf2 Columns -> "+ma1.form2.showForm2ByColumns());
-        // System.out.print("\nf2 AdditionRows -> "+Arrays.toString(ma1.form2.additionRows()));
-        // System.out.print("\nf2 AdditionColumns -> "+Arrays.toString(ma1.form2.additionColumns()));
+                            System.out.print("\nIngresar columnas (mayor que 0): ");
+                            column = read.nextInt();
+                        } while (row < 1 || column < 1);
+                        matrix.add(new DispersedMatrix(getRandomMatrix(row, column)));
+                        m = matrix.size() - 1;
 
-        // DispersedMatrix ma2 = new DispersedMatrix(testMatrix);
-        // ma2.triplet.showTriplet();
-        // System.out.println();
+                    } else if (mathOpt == 1) {
+                        matrix.add(new DispersedMatrix(getRandomMatrix()));
+                        m = matrix.size() - 1;
+                        
+                    } else
+                        System.out.println("Opcion invalida");
 
-        // ma1.triplet.addition(ma1.triplet);
-        // ma1.triplet.showTriplet();
-        // System.out.println();
+                    break;
 
-        /*
-        80 0 29 33
-        0 81 0 16
-        87 0 0 81 
+                case 2:
+                    System.out.println("\n" + matrix.get(m).showAllForms());
 
-        62 0 0 
-        20 79 44
-        */
+                    break;
+
+                case 3:
+                    do {
+                        System.out.print("\nQue Operacion desea hacer: " +
+                                "\n1. Suma entre matrices." +
+                                "\n2. Multiplicacion entre matrices" +
+                                "\n3. Mostrar la suma de las filas." +
+                                "\n4. Mostrar la suma de las columnas." +
+                                "\nOpcion: ");
+                        mathOpt = read.nextInt();
+
+                    } while (mathOpt < 1 || mathOpt > 4);
+
+                    if (mathOpt == 1) {
+                        for (int i = 0; i < matrix.size(); i++) {
+                            System.out.println((i + 1) + ". " + matrix.get(i));
+                        }
+                        System.out.print("Seleccionar matriz a usar: ");
+                        auxM = read.nextInt() - 1;
+                        matrix.get(m).adittion(matrix.get(auxM));
+
+                    } else if (mathOpt == 2) {
+                        for (int i = 0; i < matrix.size(); i++) {
+                            System.out.println((i + 1) + ". " + matrix.get(i));
+                        }
+                        System.out.print("Seleccionar matriz a usar: ");
+                        auxM = read.nextInt() - 1;
+                        matrix.get(m).multiply(matrix.get(auxM));
+
+                    } else if (mathOpt == 3) {
+                        matrix.get(m).additionRows();
+                    } else if (mathOpt == 4) {
+                        matrix.get(m).additionColumns();
+                        ;
+                    } else
+                        System.out.println("Opcion imposible.");
+
+                    break;
+
+                case 4:
+                    do {
+                        System.out.print("\nIngresar fila: ");
+                        row = read.nextInt();
+
+                        System.out.print("\nIngresar columna: ");
+                        column = read.nextInt();
+                    } while (row < 1 || column < 1);
+
+                    System.out.print("\nIngresar dato: ");
+                    d = read.nextInt();
+
+                    matrix.get(m).insert(row, column, d);
+
+                    break;
+
+                case 5:
+                    System.out.print("\nIngresar dato: ");
+                    d = read.nextInt();
+
+                    matrix.get(m).deleteByNumber(d);
+                    break;
+
+                case 6:
+                    do {
+                        System.out.print("\nIngresar filas (mayor que 0): ");
+                        row = read.nextInt();
+
+                        System.out.print("\nIngresar columnas (mayor que 0): ");
+                        column = read.nextInt();
+                    } while (row < 1 || column < 1);
+
+                    matrix.get(m).deleteByPosition(row, column);
+
+                    break;
+
+                case 7:
+                    for (int i = 0; i < matrix.size(); i++) {
+                        System.out.println((i + 1) + ". " + matrix.get(i));
+                    }
+                    System.out.print("Seleccionar matriz a usar: ");
+                    m = read.nextInt() - 1;
+                    break;
+
+                case 8:
+                    break;
+
+                default:
+                    System.out.println("Opcion invalida.");
+                    break;
+            }
+        }
 
     }
 
-    public static int[][] getRandomMatrix() {
-        int n = 0;
-        int m = 0;
-        do {
-            n = (int) Math.floor(Math.random() * 3 + 2);
-            m = (int) Math.floor(Math.random() * 3 + 2);
-        } while (n == 0 && m == 0);
+    public static String menu() {
+        return ("Menu de polinomios." +
+                state() +
+                "\n1. Generar una matriz aleatoria" +
+                "\n2. Mostrar matriz en todas sus formas." +
+                "\n3. Operaciones Matematicas entre matrices." +
+                "\n4. Insertar un dato." +
+                "\n5. Eliminar por datos." +
+                "\n6. Eliminar por posicion" +
+                "\n7. Seleccionar matriz." +
+                "\n0. Salir." +
+                "\nOpcion: ");
+    }
 
-        System.out.println(n+"x"+m);
+    public static String state() {
+        return "\nMatriz Selecionada: " + (m + 1) +
+                "\nNumero de matrices: " + matrix.size();
+    }
+
+    public static int[][] getRandomMatrix() {
+        return getRandomMatrix(0, 0);
+    }
+
+    public static int[][] getRandomMatrix(int n, int m) {
+        if (n == 0) {
+            do {
+                n = (int) Math.floor(Math.random() * 3 + 2);
+            } while (n == 0);
+        }
+        if (m == 0) {
+            do {
+                n = (int) Math.floor(Math.random() * 3 + 2);
+            } while (m == 0);
+        }
+
+        System.out.println(n + "x" + m);
         int Mat[][] = new int[n][m];
 
         for (int i = 0; i <= ((n * m) / 2) + 1; i++) {
@@ -114,7 +230,8 @@ public class App {
                 System.out.print(Mat[i][j] + " ");
             }
             System.out.println(); // Salto de línea al final de cada fila
-        } System.out.println();
+        }
+        System.out.println();
 
         return Mat;
     }

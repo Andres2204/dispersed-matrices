@@ -15,13 +15,27 @@ public class Form1 {
     }
 
     private void createForm1(int[][] matrix) {
+        
+        // STEP 1
+        // create head registers.
+        step1(matrix);
+
+        //STEP 2
+        // create nodes for head registers.
+        step2(matrix);
+
+        //STEP 3
+        // Link nodes by column
+        step3();
+        
+    }
+
+    private void step1(int[][] matrix) {
         // find max
         int max = matrix.length > matrix[0].length ? matrix.length : matrix[0].length;
         // rows and columns
         int rows = matrix.length, columns = matrix[0].length;
 
-        // STEP 1
-        // create head registers.
         head = new Node(rows, columns, 0);
         Node p = head;
         for (int i = 0; i < max; i++) {
@@ -32,16 +46,16 @@ public class Form1 {
             p.setNextRow(p);
         }
         p.setNextNode(head);
+    }
 
-        //STEP 2
-        // create nodes for head registers.
-        p = head.getNextNode();
+    private void step2(int[][] matrix) {
+        Node p = head.getNextNode();
         Node q;
 
         // iterate de matrix
-        for (int i = 0; i < rows; i++) { // iterate rows
+        for (int i = 0; i < head.getRow(); i++) { // iterate rows
             q = p;
-            for (int j = 0; j < columns; j++) { // iterate columns
+            for (int j = 0; j < head.getColumn(); j++) { // iterate columns
                 if (matrix[i][j] != 0) { // add a node
                     q.setNextRow(new Node(i, j, matrix[i][j]));
                     q = q.getNextRow();
@@ -51,11 +65,6 @@ public class Form1 {
             q.setNextRow(p);
             p = p.getNextNode();
         } 
-
-        //STEP 3
-        // Link nodes by column
-        step3();
-        
     }
 
     private void step3() {
@@ -89,91 +98,57 @@ public class Form1 {
 
         if (head.getRow() != B.getHead().getRow() || head.getColumn() != B.getHead().getColumn()) return;
 
-        Node ap = head.getNextNode(), bp = B.getHead().getNextNode();
-        Node aq = null, bq = null;
-        Node auxC = null;
+        Form1 C = new Form1(new int[head.getRow()][head.getColumn()]);
 
+        Node ap = head.getNextNode(), aq;
+        Node bp = B.getHead().getNextNode(), bq, search; 
+        
         while (ap != head && bp != B.getHead()) {
 
             aq = ap.getNextRow(); bq = bp.getNextRow();
 
-            System.out.println("\n-----------");
-
             while (aq != ap || bq != bp) {
 
-                System.out.print(aq.getColumn() +" , " +bq.getColumn());
-
-                if ((aq != ap && bq != bp) && (aq.getColumn() == bq.getColumn())) {
-                    aq.setData(aq.getData()+bq.getData());
-                    System.out.print("  1");
-                }
-
-                if (aq == ap && bq != bp) { // only aq endend
-
-                    System.out.print("  2");
-                    aq = aq.getNextRow();
-                    while (aq.getNextRow() != ap) {
-                        aq = aq.getNextRow();
-                    }
-
-                    Node x = new Node(bq.getRow(), bq.getColumn(), bq.getData());
-                    x.setNextRow(aq.getNextRow());
-                    aq.setNextRow(x);
+                if (bq == bp) { // bq ended
+                    C.appendEndRows(aq.getRow(), aq.getColumn(), aq.getData());
                     aq = aq.getNextRow();
 
-                } else if (bq != bp && bq.getColumn() == 0 && aq.getColumn() != 0) {
+                } else if (aq == ap) { // aq ended
+                    C.appendEndRows(bq.getRow(), bq.getColumn(), bq.getData());
+                    bq = bq.getNextRow();
 
-                    System.out.print("  3");
-                    Node x = new Node(bq.getRow(), bq.getColumn(), bq.getData());
-                    x.setNextRow(ap.getNextRow());
-                    ap.setNextRow(x);
-                                
-                } else if ((aq != ap && bq != bp) && (aq.getColumn() != bq.getColumn())) {
-                    if (aq.getColumn() < bq.getColumn()) {
-                        System.out.print("  4");
-                        // buscar en A
-                        auxC = aq;
-                        while (auxC != ap && auxC.getColumn() < bq.getColumn()) {
-                            auxC = auxC.getNextRow();
-                        }
+                } else if (aq.getColumn() == bq.getColumn()) {
+                    C.appendEndRows(aq.getRow(), aq.getColumn(), aq.getData() + bq.getData());
+                    aq = aq.getNextRow();
+                    bq = bq.getNextRow();
 
-                        if (auxC == ap || auxC.getColumn() > bq.getColumn()) {
-                            Node x = new Node(bq.getRow(), bq.getColumn(), bq.getData());
-                            x.setNextRow(aq.getNextRow());
-                            aq.setNextRow(x);
-                            aq = aq.getNextRow();
-                        }
-                        if (auxC.getColumn() == bq.getColumn()) auxC.setData(bq.getData()+auxC.getData());
-
-
-                    } else if (aq.getColumn() > bq.getColumn()) {
-                        System.out.print("  5");
-                        //buscar en B
-                        auxC = bq;
-                        while (auxC != bp && auxC.getColumn() < aq.getColumn()) {
-                            auxC = auxC.getNextRow();
-                        }
-
-                        if (auxC == bp || auxC.getColumn() > aq.getColumn()) {
-                            Node x = new Node(bq.getRow(), bq.getColumn(), bq.getData());
-                            x.setNextRow(aq.getNextRow());
-                            aq.setNextRow(x);
-                            aq = aq.getNextRow();
-                        };
-                        if (auxC.getColumn() == aq.getColumn()) auxC.setData(aq.getData()+auxC.getData());
+                } else if (aq.getColumn() < bq.getColumn()) {
+                    // search aq element in B
+                    search = aq != ap ? B.searchByPos(aq.getRow(), aq.getColumn()) : null;
+                    if ( search != null) {
+                        C.appendEndRows(aq.getRow(), aq.getColumn(), aq.getData() + search.getData());
+                    } else {
+                        C.appendEndRows(aq.getRow(), aq.getColumn(), aq.getData());
                     }
+                    aq = aq.getNextRow();
+
+                } else {   
+                    // search bq element in A
+                    search = bq != bp ? searchByPos(bq.getRow(), bq.getColumn()) : null;
+                    if ( search != null ) {// aq search
+                        C.appendEndRows(bq.getRow(), bq.getColumn(), bq.getData() + search.getData());
+                    } else {
+                        C.appendEndRows(bq.getRow(), bq.getColumn(), bq.getData());
+                    }
+                    bq = bq.getNextRow();
                 }
 
-                if (aq != ap) aq = aq.getNextRow();
-                if (bq != bp) bq = bq.getNextRow();
-                System.out.println();
             }
 
             if (ap != head) ap = ap.getNextNode();
             if (ap != B.getHead()) bp = bp.getNextNode();
         }
-        // appendSortRows(head.getNextNode(), 0, 1, 10);
-
+        head = C.getHead();
         step3();
     }
 
@@ -211,7 +186,42 @@ public class Form1 {
         return columnsResult;
     }
 
-    public void multiply(Form1 B) {}
+    public void multiply(Form1 B) {
+
+        Form1 C;
+        if (head.getColumn() == B.getHead().getRow()){
+            C = new Form1(new int[head.getRow()][B.getHead().getColumn()]);
+
+        } else if (head.getRow() == B.getHead().getColumn() ) {
+            C = new Form1(new int[B.getHead().getRow()][head.getColumn()]);
+
+        } else return;
+
+        int i = 0, j = 0, k=0, sum, adata, bdata;
+        Node asearch, bsearch;
+        while (i < head.getRow()) {
+            j = 0;
+            while (j < B.getHead().getColumn()) {
+                k=0;
+                sum = 0;
+                while (k < head.getColumn() ) {
+                    asearch = searchByPos(i, k);
+                    bsearch = B.searchByPos(k, j);
+
+                    adata = asearch != null ? asearch.getData() : 0;
+                    bdata = bsearch != null ? bsearch.getData() : 0;
+                    sum += adata*bdata;
+
+                    k++;
+                }
+                if (sum != 0) C.appendEndRows(i, j, sum);
+                j++;
+            }
+            i++;
+        }
+        head = C.getHead();
+        step3();
+    }
 
     // Editing Methods
 
@@ -308,6 +318,24 @@ public class Form1 {
 
     // Others
 
+    private Node searchByPos(int row, int column) {
+        Node p = head.getNextNode(), q;
+
+        while (p != head) {
+            q = p.getNextRow();
+            while (q != p) {
+                if (q.getRow() == row && q.getColumn() == column) {
+                    return q;
+                }
+                q = q.getNextRow();
+            }
+            p = p.getNextNode();
+
+        }
+
+        return null;
+    }
+
     private int rowSize(Node start) {
         if(!isEmptyRow(start)) {
             int c = 0;
@@ -321,32 +349,20 @@ public class Form1 {
         return 0;
     }
 
-    private void appendSortRows(Node start, int row, int column, int d) { 
-            Node p = start.getNextRow(), q = p ,x = new Node(row, column, d);
-            if (!isEmptyRow(start)) {
-    
-                // Loop through the list until some condition is met
-                while (p != start) {
-                    if (p.getColumn() > q.getColumn()) {
-                        break; // exit to while
-                    }
-                    q = p;
-                    p = p.getNextRow();
-                }; 
-    
-                if (p == start) {
-                    x.setNextRow(start.getNextRow());
-                    start.setNextRow(x);
-                } else {
-                    q.setNextRow(p);
-                    p.setNextRow(x);
-                    x.setNextRow(start);
-                }
-    
-            } else {
-                start.setNextRow(x);
-                x.setNextRow(start);
-            }
+    private void appendEndRows(int row, int column, int d) { 
+        if (head != null && (row >= 0 && row < head.getRow()) && (column >= 0 && column < head.getColumn())) {
+
+            Node p = head.getNextNode(), q = null;
+            while (p.getRow() != row) p = p.getNextNode();
+
+            q = p.getNextRow();
+            while (q.getNextRow() != p) q = q.getNextRow();
+
+            Node x = new Node(row, column, d);
+            x.setNextRow(p);
+            q.setNextRow(x);
+        }
+
     }
 
     public boolean isEmptyRow(Node start) {
