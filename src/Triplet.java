@@ -235,7 +235,31 @@ public class Triplet {
         triplet = newTriplet;
     }
 
-    public void deleteByNumber(int d) {}
+    public void deleteByNumber(int d) {
+        for (int i = 1; i < triplet.length; i++) {
+            if (triplet[i][2] == d) {
+                triplet[i][2] = 0;
+            }
+        }
+
+        int[][] newTriplet = new int[triplet[0][2]][3];
+        int j = 1;
+
+        for (int i = 1; i < triplet.length; i++) {
+            if (triplet[i][2] != 0) {
+                newTriplet[j][0] = triplet[i][0];
+                newTriplet[j][1] = triplet[i][1];
+                newTriplet[j][2] = triplet[i][2];
+                j++;
+            } 
+        }
+
+        newTriplet[0][0] = triplet[0][0];
+        newTriplet[0][1] = triplet[0][1];
+        newTriplet[0][2] = j-1;
+
+        triplet = newTriplet;
+    }
 
     public void deleteByPosition(int row, int column) {
         // row and column range verification

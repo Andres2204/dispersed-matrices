@@ -70,7 +70,34 @@ public class Form2 {
 
     public void insert(int row, int column, int d) {}
 
-    public void deleteByNumber(int d) {}
+    public void deleteByNumber(int d) {
+
+        Node p = head;
+        Node q = head.getNextRow();
+        Node qAnt = head;
+        
+        if (head != null) {
+            do {
+                if (q.getData() == d) {
+                    
+                    qAnt.setNextRow(q.getNextRow());
+                    q.setData(0);
+                    q.setColumn(-1);
+                    q.setRow(-1);
+                    
+                    System.out.println("Eliminado.");
+                    break;
+                }
+                qAnt = q;
+                q = q.getNextRow();
+                if (p == q) {
+                    System.out.println("No se encontró el dato.");
+                }
+
+            } while (p != q);
+
+        }
+    }
 
     public void deleteByPosition(int row, int column) {}
 

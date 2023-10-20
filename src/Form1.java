@@ -217,9 +217,41 @@ public class Form1 {
 
     public void insert(int row, int column, int d) {}
 
-    public void deleteByNumber(int d) {}
+    public void deleteByNumber(int d) {
+        Node p = head;
+        Node q = head;
+        Node qAnt = head;
 
-    public void deleteByPosition(int row, int column) {}
+        p = p.getNextNode();
+        q = p.getNextRow();
+        qAnt = q;
+        
+        if (head != null) {
+            do {
+                if (q.getData() == d) {
+                    qAnt.setNextRow(q.getNextRow());
+                    q.setData(0);
+                    q.setColumn(-1);
+                    q.setRow(-1);
+                    step3();
+                    System.out.println("Eliminado");
+                    break;
+                }
+
+                qAnt = q;
+                q = q.getNextRow();
+                if (p == q) {
+                    qAnt = p.getNextNode();
+                    p = p.getNextNode();
+                    q = p.getNextRow();
+                }
+            } while (p != q);
+        }
+    }
+
+    public void deleteByPosition(int row, int column) {
+
+    }
 
     // [====================== Utility ======================]
 
