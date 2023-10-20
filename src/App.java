@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -59,7 +58,7 @@ public class App {
                 case 1:
 
                     do {
-                        System.out.print("\n Desea ingresar un tamaño espesifico? (0: si, 1: no) ");
+                        System.out.print("\n Desea ingresar un tamaño especifico? (0: si, 1: no) ");
                         mathOpt = read.nextInt();
 
                     } while (mathOpt != 1 && mathOpt != 0);
@@ -139,7 +138,7 @@ public class App {
                     System.out.print("\nIngresar dato: ");
                     d = read.nextInt();
 
-                    matrix.get(m).insert(row, column, d);
+                    matrix.get(m).form2.insert(row, column, d);
 
                     break;
 

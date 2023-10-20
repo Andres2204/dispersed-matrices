@@ -225,7 +225,37 @@ public class Form1 {
 
     // Editing Methods
 
-    public void insert(int row, int column, int d) {}
+    public void insert(int row, int column, int d) {
+        Node p = head.getNextNode();
+        // Node pAnt = p;
+
+        Node newNode = new Node(row, column, d);
+
+        if (searchByPos(row, column) != null) {
+            System.out.println("Ya existe un dato en esta posición.");
+        } else {
+            
+            while (p != null) {
+                if (p.getRow() == row) {
+                    if (p.getNextRow().getColumn() == column) {
+                        p.setNextNode(newNode);
+
+                        break;
+                    }
+                    
+                }
+                // pAnt = p;
+                p = p.getNextRow();
+                
+                
+                if (p == head) {
+                    p = p.getNextNode();
+                    // pAnt = p;
+                }
+            
+            }
+        }
+    }
 
     public void deleteByNumber(int d) {
         Node p = head;

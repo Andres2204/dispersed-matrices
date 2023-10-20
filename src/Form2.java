@@ -139,6 +139,40 @@ public class Form2 {
     // Editing Methods
 
     public void insert(int row, int column, int d) {
+
+        Node p = head;
+        Node q = p;
+
+        Node newNode = new Node(row, column, d);
+
+        if (searchByPos(row, column) != null) {
+            System.out.println("Ya existe un dato en esta posición.");
+        } else {
+            do {
+                
+                if (q.getNextRow() == null) {
+                    q.setNextRow(newNode);
+                    System.out.println(showForm2ByRows());
+
+                    break;
+                
+                } else if ((q.getNextRow().getRow() == row + 1) && (q.getNextColumn().getColumn() == column + 1)) {
+                    System.out.println("Insertado");
+
+                    newNode.setNextRow(q.getNextRow());
+                    q.setNextRow(newNode);
+
+                    System.out.println(showForm2ByRows());
+                    break;
+                }
+                
+                q = q.getNextRow();
+            
+            } while (q != head);
+
+            step2();
+        }
+
     }
 
     public void deleteByNumber(int d) {
@@ -171,6 +205,10 @@ public class Form2 {
     }
 
     public void deleteByPosition(int row, int column) {
+        
+        
+
+
     }
 
     // [====================== Utility ======================]
